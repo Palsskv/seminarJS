@@ -17,4 +17,15 @@ describe('GET /api/memos', function() {
         done();
       });
   });
+
+  it('should fail for invalid create request', function(done)
+  {
+    request(app)
+    .post('/api/memos', {})
+    .expect(500)
+    .end(function(err, res) {
+        if (err) return done(err);
+        done();
+      });
+  });
 });
