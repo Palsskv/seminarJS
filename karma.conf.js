@@ -13,7 +13,7 @@ module.exports = function(config) {
 
     files: wiredep({devDependencies: true}).js.map (function(file)
     {
-       return path.relative(process.cwd(), file);
+       return path.relative(process.cwd(), file).replace(/\\/g, '/');
      }).concat(['client/app/app.js',
       'client/app/**/*.js',
       'client/components/**/*.js',
@@ -29,14 +29,14 @@ module.exports = function(config) {
     },
 
     // list of files / patterns to exclude
-    exclude: [],
+    exclude: ['client/bower_components/angular-scenario/angular-scenario.js'],
 
     // web server port
     port: 9312,
 
     // level of logging
     // possible values: LOG_DISABLE || LOG_ERROR || LOG_WARN || LOG_INFO || LOG_DEBUG
-    logLevel: config.LOG_INFO,
+    logLevel: config.LOG_WARN,
 
 
     // enable / disable watching file and executing tests whenever any file changes
@@ -51,7 +51,7 @@ module.exports = function(config) {
     // - Safari (only Mac)
     // - PhantomJS
     // - IE (only Windows)
-    browsers: ['Chrome'],
+    browsers: ['PhantomJS'],
 
 
     // Continuous Integration mode
