@@ -11,15 +11,15 @@
   <div class="row">
     <div class="col-lg-12">
       <h1 class="page-header">Memos:</h1>
-      <ul class="nav nav-tabs nav-stacked col-md-4 col-lg-4 col-sm-6" >
-        <li ng-repeat="memo in memos">
+      <ul class="list-group" >
+        <li class="list-group-item" ng-repeat="memo in memos">
 	        <span>{{memo.markup}}</span>
 	        <a ng-click="delete(memo)" class="trash"><span class="glyphicon glyphicon-trash pull-right"></span></a>
         </li>
-        <li ng-show="!memos || memos.length == 0"><i>No memos created yet.</i></li>
+        <li class="list-group-item" ng-show="!memos || memos.length == 0"><i>No memos created yet.</i></li>
       </ul>
     </div>
-    
+
       <a ui-sref="memos.create" class="btn btn-primary">Create a memo</a>
   </div>
 </div>
