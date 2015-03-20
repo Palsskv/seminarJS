@@ -3,7 +3,7 @@
 describe('Controller: MemosCtrl', function () {
 
   // load the controller's module
-  beforeEach(module('seminarJsApp'));
+  beforeEach(module('seminarJsApp'), module('seminarJsApp.templates'), module('app/memos/memos.html'));
 
   var MemosCtrl, scope, $httpBackend;
 

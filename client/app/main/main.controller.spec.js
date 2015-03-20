@@ -7,12 +7,12 @@ describe('Controller: MainCtrl', function () {
 
   var MainCtrl,
       scope,
-      $httpBackend;
+      httpMock;
 
   // Initialize the controller and a mock scope
-  beforeEach(inject(function (_$httpBackend_, $controller, $rootScope) {
-    $httpBackend = _$httpBackend_;
-    $httpBackend.expectGET('/api/things')
+  beforeEach(inject(function ($httpBackend, $controller, $rootScope) {
+    httpMock = $httpBackend;
+    httpMock.expectGET('/api/things')
       .respond(['HTML5 Boilerplate', 'AngularJS', 'Karma', 'Express']);
 
     scope = $rootScope.$new();
@@ -22,7 +22,7 @@ describe('Controller: MainCtrl', function () {
   }));
 
   it('should attach a list of things to the scope', function () {
-    $httpBackend.flush();
+    httpMock.flush();
     expect(scope.awesomeThings.length).toBe(4);
   });
 });
