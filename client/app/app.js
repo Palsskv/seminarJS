@@ -12,4 +12,9 @@ angular.module('seminarJsApp', [
       .otherwise('/');
 
     $locationProvider.html5Mode(true);
-  });
+  })
+
+  .run(function ($rootScope, $state, $stateParams) {
+    $rootScope.$state = $state;
+    $rootScope.$stateParams = $stateParams;
+    });
