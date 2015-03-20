@@ -10,8 +10,7 @@ angular.module('seminarJsApp')
           };
           var failureCallback = function(response)
           {
-            console.log(response);
-            if(response.data.errors)
+            if(response && response.data && response.data.errors)
             {
               var message = _.pluck(response.data.errors,'message').join(",")
               growl.error(message);
