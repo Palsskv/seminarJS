@@ -415,8 +415,7 @@ module.exports = function (grunt) {
     // Test settings
     karma: {
       unit: {
-        configFile: 'karma.conf.js',
-        singleRun: true
+        configFile: 'karma.conf.js'
       }
     },
 
@@ -474,7 +473,26 @@ module.exports = function (grunt) {
             ]
         }
       },
-
+	'bower-install': {
+		  app: {
+			src: '<%= yeoman.app %>/index.html',
+			ignorePath: '<%= yeoman.app %>/'
+		  },
+		  test: {
+			src: 'karma.conf.js',
+			fileTypes: {
+			  js: {
+				block: /(([\s\t]*)\/\/\s*bower:*(\S*))(\n|\r|.)*?(\/\/\s*endbower)/gi,
+				detect: {
+				  js: /'.*\.js'/gi
+				},
+				replace: {
+				  js: '\'{{filePath}}\','
+				}
+			  }
+			}
+		  }
+		},
       // Inject component css into index.html
       css: {
         options: {
