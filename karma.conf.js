@@ -15,6 +15,7 @@ module.exports = function(config) {
     {
        return path.relative(process.cwd(), file).replace(/\\/g, '/');
      }).concat(['client/app/app.js',
+      'client/test/**/*.js',
       'client/app/**/*.js',
       'client/components/**/*.js',
       'client/app/**/*.html',
@@ -23,14 +24,18 @@ module.exports = function(config) {
     preprocessors: {
       '**/*.html': 'html2js',
     },
-    plugins: ['karma-jasmine',
+    plugins: [ 
+  'karma-phantomjs-launcher', 
   'karma-chrome-launcher',
-'karma-ng-html2js-preprocessor'],
-    ngHtml2JsPreprocessor: {
-      stripPrefix: 'client/'
-      //moduleName: "seminarJsApp.templates"
-    },
+  'karma-jasmine', 
+  'karma-ng-html2js-preprocessor' 
+], 
 
+
+ngHtml2JsPreprocessor: { 
+  stripPrefix: 'client/', 
+  moduleName: 'compiledTemplates' 
+},
     // list of files / patterns to exclude
     exclude: ['client/bower_components/angular-scenario/angular-scenario.js'],
 
@@ -54,7 +59,7 @@ module.exports = function(config) {
     // - Safari (only Mac)
     // - PhantomJS
     // - IE (only Windows)
-    browsers: ['Chrome'],
+    browsers: ['PhantomJS'],
 
 
     // Continuous Integration mode
