@@ -1,4 +1,3 @@
-// Generated on 2015-03-20 using generator-angular-fullstack 2.0.13
 'use strict';
 
 module.exports = function (grunt) {
@@ -421,7 +420,7 @@ module.exports = function (grunt) {
 
     mochaTest: {
       options: {
-        reporter: 'spec'
+        reporter: 'TAP'
       },
       src: ['server/**/*.spec.js']
     },
