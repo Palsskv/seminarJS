@@ -423,6 +423,7 @@ module.exports = function (grunt) {
         reporter: 'TAP'
       },
       src: ['server/**/*.spec.js']
+      dest: './test/output/tap.out'
     },
 
     protractor: {
