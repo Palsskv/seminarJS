@@ -8,6 +8,12 @@ module.exports = function(config) {
     // base path, that will be used to resolve files and exclude
     basePath: '',
 
+    reporters: ['tap'],
+
+    tapReporter: {
+      outputFile: './test/clientside.tap'
+    },
+
     // testing framework to use (jasmine/mocha/qunit/...)
     frameworks: ['jasmine'],
 
@@ -28,7 +34,8 @@ module.exports = function(config) {
   'karma-phantomjs-launcher', 
   'karma-chrome-launcher',
   'karma-jasmine', 
-  'karma-ng-html2js-preprocessor' 
+  'karma-ng-html2js-preprocessor' ,
+  'karma-tap-reporter'
 ], 
 
 

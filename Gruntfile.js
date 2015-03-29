@@ -421,7 +421,7 @@ module.exports = function (grunt) {
     mochaTest: {
       options: {
         reporter: 'TAP',
-        captureFile: 'test/tap.out'
+        captureFile: 'test/serverside.out'
       },
       src: ['server/**/*.spec.js']
       
