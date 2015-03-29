@@ -1,0 +1,9 @@
+1..2
+Express server listening on 9000, in development mode
+[90mGET /api/memos [32m200 [90m31ms - 64b[0m
+ok 1 GET /api/memos should respond with JSON array
+[90mPOST /api/memos [31m500 [90m7ms - 175b[0m
+ok 2 GET /api/memos should fail for invalid create request
+# tests 2
+# pass 2
+# fail 0
