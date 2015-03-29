@@ -12,7 +12,7 @@ angular.module('seminarJsApp')
           {
             if(response && response.data && response.data.errors)
             {
-              var message = _.pluck(response.data.errors,'message').join(",")
+              var message = _.pluck(response.data.errors,'message').join(',');
               growl.error(message);
             }
           };

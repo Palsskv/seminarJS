@@ -9,7 +9,7 @@ angular.module('seminarJsApp')
     	Memos.delete({id: memo._id}, function()
     		{
     			_.remove($scope.memos, memo);
-    			growl.info("Memo removed");
+    			growl.info('Memo removed');
     		});
     };
   });
