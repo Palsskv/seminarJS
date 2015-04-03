@@ -8,7 +8,7 @@ module.exports = function (grunt) {
     localConfig = {};
   }
 
-  // Load grunt tasks automatically, when needed
+  // Binding redirection for commands
   require('jit-grunt')(grunt, {
     express: 'grunt-express-server',
     useminPrepare: 'grunt-usemin',
@@ -18,7 +18,7 @@ module.exports = function (grunt) {
     buildcontrol: 'grunt-build-control'
   });
 
-  // Time how long tasks take. Can help when optimizing build times
+  // Log execution times
   require('time-grunt')(grunt);
 
   // Define the configuration for all the tasks
@@ -87,8 +87,7 @@ module.exports = function (grunt) {
           '{.tmp,<%= yeoman.client %>}/{app,components}/**/*.html',
           '{.tmp,<%= yeoman.client %>}/{app,components}/**/*.js',
           '!{.tmp,<%= yeoman.client %>}{app,components}/**/*.spec.js',
-          '!{.tmp,<%= yeoman.client %>}/{app,components}/**/*.mock.js',
-          '<%= yeoman.client %>/assets/images/{,*//*}*.{png,jpg,jpeg,gif,webp,svg}'
+          '!{.tmp,<%= yeoman.client %>}/{app,components}/**/*.mock.js'
         ],
         options: {
           livereload: true
@@ -106,7 +105,8 @@ module.exports = function (grunt) {
       }
     },
 
-    // Make sure code styles are up to par and there are no obvious mistakes
+    // JS syntax and code quality checking
+    // different rulesets and file collections depending on the target environment
     jshint: {
       options: {
         jshintrc: '<%= yeoman.client %>/.jshintrc',
@@ -157,7 +157,7 @@ module.exports = function (grunt) {
       server: '.tmp'
     },
 
-    // Add vendor prefixed styles
+    // Parse CSS and add vendor prefixes to CSS rules using values from the Can I Use website
     autoprefixer: {
       options: {
         browsers: ['last 1 version']
@@ -169,40 +169,6 @@ module.exports = function (grunt) {
           src: '{,*/}*.css',
           dest: '.tmp/'
         }]
-      }
-    },
-
-    // Debugging with node inspector
-    'node-inspector': {
-      custom: {
-        options: {
-          'web-host': 'localhost'
-        }
-      }
-    },
-
-    // Use nodemon to run server in debug mode with an initial breakpoint
-    nodemon: {
-      debug: {
-        script: 'server/app.js',
-        options: {
-          nodeArgs: ['--debug-brk'],
-          env: {
-            PORT: process.env.PORT || 9000
-          },
-          callback: function (nodemon) {
-            nodemon.on('log', function (event) {
-              console.log(event.colour);
-            });
-
-            // opens browser on initial server start
-            nodemon.on('config:update', function () {
-              setTimeout(function () {
-                require('open')('http://localhost:8080/debug?port=5858');
-              }, 500);
-            });
-          }
-        }
       }
     },
 
@@ -255,29 +221,6 @@ module.exports = function (grunt) {
             [/(assets\/images\/.*?\.(?:gif|jpeg|jpg|png|webp|svg))/gm, 'Update the JS to reference our revved images']
           ]
         }
-      }
-    },
-
-    // The following *-min tasks produce minified files in the dist folder
-    imagemin: {
-      dist: {
-        files: [{
-          expand: true,
-          cwd: '<%= yeoman.client %>/assets/images',
-          src: '{,*/}*.{png,jpg,jpeg,gif}',
-          dest: '<%= yeoman.dist %>/public/assets/images'
-        }]
-      }
-    },
-
-    svgmin: {
-      dist: {
-        files: [{
-          expand: true,
-          cwd: '<%= yeoman.client %>/assets/images',
-          src: '{,*/}*.svg',
-          dest: '<%= yeoman.dist %>/public/assets/images'
-        }]
       }
     },
 
@@ -365,49 +308,6 @@ module.exports = function (grunt) {
         dest: '.tmp/',
         src: ['{app,components}/**/*.css']
       }
-    },
-
-    buildcontrol: {
-      options: {
-        dir: 'dist',
-        commit: true,
-        push: true,
-        connectCommits: false,
-        message: 'Built %sourceName% from commit %sourceCommit% on branch %sourceBranch%'
-      },
-      heroku: {
-        options: {
-          remote: 'heroku',
-          branch: 'master'
-        }
-      },
-      openshift: {
-        options: {
-          remote: 'openshift',
-          branch: 'master'
-        }
-      }
-    },
-
-    // Run some tasks in parallel to speed up the build process
-    concurrent: {
-      server: [
-      ],
-      test: [
-      ],
-      debug: {
-        tasks: [
-          'nodemon',
-          'node-inspector'
-        ],
-        options: {
-          logConcurrentOutput: true
-        }
-      },
-      dist: [
-        'imagemin',
-        'svgmin'
-      ]
     },
 
     // Test settings
@@ -521,22 +421,9 @@ module.exports = function (grunt) {
       return grunt.task.run(['build', 'env:all', 'env:prod', 'express:prod', 'wait', 'open', 'express-keepalive']);
     }
 
-    if (target === 'debug') {
-      return grunt.task.run([
-        'clean:server',
-        'env:all',
-        'concurrent:server',
-        'injector',
-        'wiredep',
-        'autoprefixer',
-        'concurrent:debug'
-      ]);
-    }
-
     grunt.task.run([
       'clean:server',
       'env:all',
-      'concurrent:server',
       'injector',
       'wiredep',
       'autoprefixer',
@@ -565,7 +452,6 @@ module.exports = function (grunt) {
       return grunt.task.run([
         'clean:server',
         'env:all',
-        'concurrent:test',
         'injector',
         'autoprefixer',
         'karma'
@@ -578,9 +464,9 @@ module.exports = function (grunt) {
     ]);
   });
 
+  //Build steps for distribution affecting the site artefacts
   grunt.registerTask('build', [
     'clean:dist',
-    'concurrent:dist',
     'injector',
     'wiredep',
     'useminPrepare',
@@ -596,6 +482,7 @@ module.exports = function (grunt) {
     'usemin'
   ]);
 
+  //Main grunt task for distribution
   grunt.registerTask('default', [
     'newer:jshint',
     'test',
